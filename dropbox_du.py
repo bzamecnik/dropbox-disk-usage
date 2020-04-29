@@ -32,8 +32,10 @@ def read_index(index_file):
     df = pd.read_csv(index_file,
         sep='\t',
         header=None,
-        names=['size', 'path_display'])
-    df['path_lower'] = df['path_display'].apply(str.lower)
+        names=['size', 'path_display']).dropna()
+    df['size'] = df['size'].astype(int)
+    df['path_display'] = df['path_display'].astype(str)
+    df['path_lower'] = df['path_display'].str.lower()
     df.sort_values('path_lower', inplace=True)
     df['is_dir'] = pd.isnull(df['size'])
     df['path_list'] = df['path_lower'].apply(split_path)
