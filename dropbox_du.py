@@ -34,7 +34,7 @@ def read_index(index_file):
         header=None,
         names=['size', 'path_display'])
     df['path_lower'] = df['path_display'].apply(str.lower)
-    df.sort('path_lower', inplace=True)
+    df.sort_values('path_lower', inplace=True)
     df['is_dir'] = pd.isnull(df['size'])
     df['path_list'] = df['path_lower'].apply(split_path)
     return df
@@ -117,7 +117,7 @@ class Node(object):
         df_children = pd.DataFrame.from_records(child_rows())
         df_children.set_index('name', inplace=True)
         df_children['size'] = df_children['size'].astype(int)
-        df_children.sort('size', ascending=False, inplace=True)
+        df_children.sort_values('size', ascending=False, inplace=True)
         print(df_children[['size_perc', 'size_fmt', 'size']])
 
     def __getitem__(self, key):
